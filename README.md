@@ -80,20 +80,20 @@ flowchart TD
         Trust["Marketplace Trust Gateway (:8081)<br/>• /v1/mcp/messages (tools/list & tools/call)<br/>• Dynamic RP Tenant Profile Resolution<br/>• Zero-Trust Policy PEP & Sandboxing"]
     end
 
-    Caller -->|1. A2A tasks/send + Bearer Token| A2A
+    Caller -->|"1. A2A tasks/send + Bearer Token"| A2A
     A2A --> JWKSChecker
-    JWKSChecker -.->|Validate against JWKS| IdP
+    JWKSChecker -.->|"Validate against JWKS"| IdP
     A2A --> NICP
     NICP --> Memory
-    Memory -->|2. Think: Model Reasoning + Tool Schemas| Swarm
-    Swarm -->|3. Tool Plan: claw_weather(Zagreb)| Memory
+    Memory -->|"2. Think: Model Reasoning + Tool Schemas"| Swarm
+    Swarm -->|"3. Tool Plan: claw_weather(Zagreb)"| Memory
     Memory --> Mapper
-    Mapper -->|4. Act: MCP tools/call via API Key & Tenant ID| Trust
-    Trust -.->|Dynamic Tenant Lookup| IdP
-    Trust -->|5. Verified Execution Result| Memory
-    Memory -->|6. Synthesize Final Answer| Swarm
-    Swarm -->|7. Formatted Response| A2A
-    A2A -->|8. Signed JSON-RPC ExecutionResult| Caller
+    Mapper -->|"4. Act: MCP tools/call via API Key & Tenant ID"| Trust
+    Trust -.->|"Dynamic Tenant Lookup"| IdP
+    Trust -->|"5. Verified Execution Result"| Memory
+    Memory -->|"6. Synthesize Final Answer"| Swarm
+    Swarm -->|"7. Formatted Response"| A2A
+    A2A -->|"8. Signed JSON-RPC ExecutionResult"| Caller
 ```
 
 ### 2.1 Cognitive Ingress (Swarm Gateway)
