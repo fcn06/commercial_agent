@@ -1,0 +1,33 @@
+# ─────────────────────────────────────────────────────────
+# B2B OAuth2 Client Registry — EXAMPLE TEMPLATE
+#
+# Copy this file to b2b_oauth_clients.toml and customize
+# with your actual client entries.
+#
+# Each [[clients]] entry represents an authorized external
+# company that can authenticate to the B2B agent via OAuth2
+# Client Credentials flow.
+#
+# SECURITY: Client secrets are NEVER stored in this file.
+# Each entry specifies an environment variable name
+# (client_secret_env) from which the actual secret is
+# resolved at runtime.
+# ─────────────────────────────────────────────────────────
+
+[server]
+# Token lifetime in seconds (default: 1 hour)
+access_token_ttl_secs = 3600
+
+[[clients]]
+client_id = "company-alpha"
+client_secret_env = "B2B_SECRET_COMPANY_ALPHA"
+tenant_id = "tenant_alpha"
+allowed_scopes = ["b2b:query", "b2b:semantic_filter"]
+display_name = "Company Alpha (Strategic Partner)"
+
+[[clients]]
+client_id = "company-beta"
+client_secret_env = "B2B_SECRET_COMPANY_BETA"
+tenant_id = "tenant_beta"
+allowed_scopes = ["b2b:query"]
+display_name = "Company Beta"

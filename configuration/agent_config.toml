@@ -1,0 +1,31 @@
+[agent]
+name = "commercial_b2b_agent"
+description = "Commercial Standalone B2B Collaboration & Semantic Filter Agent"
+version = "0.1.0"
+listen_addr = "127.0.0.1:4010"
+public_url = "http://127.0.0.1:4010"
+system_prompt = "You are a Commercial B2B Autonomous Agent representing your enterprise. You enforce strict semantic DLP filtering, verify counterparty reputation and credentials, map external tool calls to canonical actions, and execute all actions strictly via the Marketplace Trust Gateway."
+
+[llm]
+url = "https://api.openai.com/v1"
+model_id = "gpt-4o-mini"
+api_key_env = "LLM_API_KEY"
+max_iterations = 10
+
+[gateway]
+url = "http://127.0.0.1:8081"
+tenant_id = "default"
+api_key = "sk_default_dev_key"
+timeout_secs = 30
+
+[oauth]
+enabled = true
+listen_addr = "127.0.0.1:4012"
+public_url = "http://127.0.0.1:4012"
+clients_config = "configuration/b2b_oauth_clients.toml"
+
+[mapping]
+schema_mappings_path = "configuration/b2b_schema_mappings.toml"
+
+[skills]
+default_skill_path = "configuration/skills/default_skill.md"

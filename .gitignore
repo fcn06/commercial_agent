@@ -1,0 +1,23 @@
+# Environment & Secrets
+.env
+.env.*
+!.env.example
+
+# Cargo build artifacts
+target/
+target
+
+# Project-specific ignored folders
+meta/
+meta
+backlog/
+backlog
+
+# OS & Editor files
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+*~
+.idea/
+.vscode/

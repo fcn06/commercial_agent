@@ -1,0 +1,41 @@
+# ─────────────────────────────────────────────────────────────────────────────
+# B2B Schema Mappings: Semantic IO Mapper Configuration
+#
+# Maps external agent/swarm tool names (A2A, MCP, Claude, CrewAI) into
+# canonical tool requests.
+# ─────────────────────────────────────────────────────────────────────────────
+
+[[mappings]]
+incoming_tool = "google.calendar.create_event"
+canonical_tool = "calendar_create_event"
+passthrough_unmapped = true
+
+[[mappings.parameter_mappings]]
+source_param = "event_title"
+target_param = "title"
+
+[[mappings.parameter_mappings]]
+source_param = "start_time"
+target_param = "start_iso"
+
+[[mappings.parameter_mappings]]
+source_param = "end_time"
+target_param = "end_iso"
+
+[[mappings]]
+incoming_tool = "mcp_stripe/charge"
+canonical_tool = "stripe_charge_customer"
+passthrough_unmapped = false
+
+[[mappings.parameter_mappings]]
+source_param = "amount"
+target_param = "amount_cents"
+
+[[mappings.parameter_mappings]]
+source_param = "customer"
+target_param = "customer_id"
+
+[[mappings.parameter_mappings]]
+source_param = "currency"
+target_param = "currency"
+default_value = "USD"

@@ -1,0 +1,57 @@
+# ═══════════════════════════════════════════════════════════
+#  Commercial B2B Agent Identity Configuration
+# ═══════════════════════════════════════════════════════════
+
+#################################################################
+# General parameters
+#################################################################
+agent_id="Identity_Agent"
+agent_name="Identity_Agent"
+agent_http_endpoint="http://127.0.0.1:4010"
+agent_ws_endpoint="ws://127.0.0.1:4011"
+
+#################################################################
+# Discovery service
+#################################################################
+agent_discovery_url="http://127.0.0.1:4000"
+
+#################################################################
+# Purpose and high level skills
+#################################################################
+agent_system_prompt="You are an identity verification agent. Your primary role is to authenticate users and provide verified identity information upon successful authentication."
+agent_skill_id="identity_verification"
+agent_skill_name="Identity Verification and Authentication"
+agent_skill_description="Authenticates users and provides verified identity information."
+agent_version="1.0.0"
+agent_description="An agent that handles user authentication and provides identity details."
+agent_doc_url="/docs"
+agent_tags=["authentication","identity","verification","security"]
+agent_examples=["Authenticate user John Doe with credentials", "Verify identity for token XYZ", "Provide user details for authenticated session"]
+
+#################################################################
+# Swarm Gateway (Tier 1 Cognitive Ingress)
+#################################################################
+agent_model_id="openai/gpt-oss-20b"
+agent_llm_url="http://127.0.0.1:8080"
+
+#################################################################
+# MCP runtime configuration file
+#################################################################
+agent_mcp_config_path="configuration/mcp_runtime_config.toml"
+
+#################################################################
+# V5 Agent Delegation: PicoClaw integration (Scenario 3)
+#################################################################
+#[picoclaw]
+#picoclaw_target_id="picoclaw1"
+#picoclaw_endpoint="http://127.0.0.1:18790"
+#picoclaw_publish_subject="picoclaw.dispatch"
+#trust_gateway_url="http://127.0.0.1:3060"
+#picoclaw_ws_endpoint="ws://127.0.0.1:18790/pico/ws"
+#picoclaw_token="ssi-picoclaw-token-xyz123"
+
+#################################################################
+# External Identity Server Configuration
+#################################################################
+b2b_identity_server_url="http://127.0.0.1:3075"
+b2b_jwks_url="http://127.0.0.1:3075/.well-known/jwks.json"

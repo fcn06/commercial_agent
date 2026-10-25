@@ -1,0 +1,36 @@
+[package]
+name = "commercial_b2b_agent"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+agent_models = { git = "https://github.com/fcn06/swarm_commons.git", rev = "4703455be5ba40049ff028412de2fbceef4faa12" }
+agent_core = { git = "https://github.com/fcn06/swarm_commons.git", rev = "4703455be5ba40049ff028412de2fbceef4faa12" }
+configuration = { git = "https://github.com/fcn06/swarm_commons.git", rev = "4703455be5ba40049ff028412de2fbceef4faa12" }
+llm_api = { git = "https://github.com/fcn06/swarm_commons.git", rev = "4703455be5ba40049ff028412de2fbceef4faa12" }
+
+sha2 = "0.10"
+hex = "0.4"
+subtle = "2.6"
+reqwest = { version = "0.12", features = ["json"] }
+
+tokio = { version = "1", features = ["full"] }
+async-nats = "0.37"
+ed25519-dalek = "2.1"
+base64 = "0.22"
+rand = "0.8"
+serde = { version = "1.0", features = ["derive", "rc"] }
+serde_json = "1.0"
+serde_yaml = "0.9"
+anyhow = "1.0"
+tracing = "0.1"
+tracing-subscriber = { version = "0.3", features = ["env-filter", "fmt"] }
+uuid = { version = "1", features = ["v4", "serde"] }
+dotenvy = "0.15"
+a2a-rs = { version = "0.2", features = ["http-server", "http-client"] }
+axum = "0.8"
+async-trait = "0.1"
+clap = { version = "4.5", features = ["derive"] }
+chrono = { version = "0.4.24", features = ["serde"] }
+toml = "0.8"
+futures = "0.3"
