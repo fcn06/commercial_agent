@@ -1,3 +1,5 @@
+#![deny(clippy::disallowed_methods)]
+
 use clap::Parser;
 use configuration::{setup_logging, AgentConfig};
 use std::env;
@@ -130,25 +132,39 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
         b2b_agent = b2b_agent.with_skill(skill.clone());
     }
 
-    let b2b_oauth_port: u16 = env::var("B2B_OAUTH_PORT")
-        .unwrap_or_else(|_| "4012".to_string())
-        .parse()
-        .unwrap_or(4012);
+    let enable_embedded_oauth: bool = env::var("B2B_ENABLE_EMBEDDED_OAUTH")
+        .map(|v| v == "true" || v == "1")
+        .unwrap_or(false);
 
-    let b2b_oauth_config_path = env::var("B2B_OAUTH_CONFIG_PATH")
-        .unwrap_or_else(|_| "configuration/b2b_oauth_clients.toml".to_string());
-    let b2b_oauth_config = oauth::load_b2b_oauth_config(&b2b_oauth_config_path);
+    if enable_embedded_oauth {
+        let b2b_oauth_port: u16 = env::var("B2B_OAUTH_PORT")
+            .unwrap_or_else(|_| "4012".to_string())
+            .parse()
+            .unwrap_or(4012);
 
-    let (signing_key, public_key_b64) =
-        oauth::load_or_generate_keypair().expect("Failed to load or generate B2B signing keypair");
+        let b2b_oauth_config_path = env::var("B2B_OAUTH_CONFIG_PATH")
+            .unwrap_or_else(|_| "configuration/b2b_oauth_clients.toml".to_string());
+        let b2b_oauth_config = oauth::load_b2b_oauth_config(&b2b_oauth_config_path);
 
-    let oauth_state = oauth::B2bOAuthState {
-        config: std::sync::Arc::new(b2b_oauth_config),
-        signing_key: std::sync::Arc::new(signing_key),
-        public_key_b64,
-    };
+        let (signing_key, public_key_b64) =
+            oauth::load_or_generate_keypair().expect("Failed to load or generate B2B signing keypair");
 
-    oauth::start_oauth_server(b2b_oauth_port, oauth_state).await?;
+        let oauth_state = oauth::B2bOAuthState {
+            config: std::sync::Arc::new(b2b_oauth_config),
+            signing_key: std::sync::Arc::new(signing_key),
+            public_key_b64,
+        };
+
+        oauth::start_oauth_server(b2b_oauth_port, oauth_state).await?;
+        tracing::info!("🔑 Embedded fallback OAuth2 server listening on port {}", b2b_oauth_port);
+    } else {
+        let identity_url = env::var("B2B_IDENTITY_SERVER_URL")
+            .unwrap_or_else(|_| "http://127.0.0.1:3075".to_string());
+        tracing::info!(
+            "🔑 Embedded OAuth2 server (:4012) disabled. Using sovereign Identity Server at {}",
+            identity_url
+        );
+    }
 
     let auth_config = AuthConfig::None;
 

@@ -44,7 +44,7 @@ Enterprise agentic deployments fail when cognition, execution, credentials, iden
 | **Tier 2 Marketplace Trust Gateway** | `8081` | Execution Firewall | Evaluates zero-trust policies, dynamically resolves tenant RP profiles, and executes sandboxed tool calls. |
 | **Tier 1 Swarm Gateway** | `8088` (or `8080`) | Cognitive Proxy | Multiplexes LLM backends (OpenAI, Gemini, Groq, local models), manages token budgets, and formats cognitive schemas. |
 | **Enterprise Identity Server** | `3075` | Sovereign IdP | Dynamic multi-tenant Relying Party (RP) registry, tenant onboarding, client credential issuance, and Ed25519 JWKS host. |
-| **Embedded OAuth2 Server** | `4012` | Local Dev IdP | Lightweight fallback token issuer for offline/standalone development. |
+| **Embedded OAuth2 Server** | `4012` | Local Dev IdP | Optional standalone fallback token issuer (disabled by default; enable via `B2B_ENABLE_EMBEDDED_OAUTH=true`). Primary authority is `identity_server` on port `3075`. |
 | **NATS JetStream** | `4222` | Event & State Bus | Caches counterparty public keys (`did_web_cache`) and distributes dynamic Semantic DLP policies. |
 
 ---

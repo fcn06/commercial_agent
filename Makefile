@@ -29,9 +29,10 @@ build:
 	cargo build --release
 
 run:
-	@echo "==> Starting Commercial B2B Agent (Port $(PORT), OAuth $(OAUTH_PORT))..."
+	@echo "==> Starting Commercial B2B Agent (Port $(PORT), Identity Server: http://127.0.0.1:3075)..."
 	B2B_AGENT_PORT=$${B2B_AGENT_PORT:-$(PORT)} \
-	B2B_OAUTH_PORT=$${B2B_OAUTH_PORT:-$(OAUTH_PORT)} \
+	B2B_IDENTITY_SERVER_URL=$${B2B_IDENTITY_SERVER_URL:-http://127.0.0.1:3075} \
+	B2B_JWKS_URL=$${B2B_JWKS_URL:-http://127.0.0.1:3075/.well-known/jwks.json} \
 	cargo run --release -- --config-file $(CONFIG)
 
 test:

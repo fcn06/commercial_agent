@@ -180,7 +180,7 @@ impl McpAgent {
         if !trust_api_key.is_empty() {
             req = req
                 .header("authorization", format!("Bearer {}", trust_api_key))
-                .header("x-tenant-id", "default");
+                .header("x-tenant-id", tenant);
         } else {
             req = req.header("x-tenant-id", tenant);
             if !jwt.is_empty() {

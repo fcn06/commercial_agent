@@ -574,7 +574,7 @@ impl B2bIdentityAgent {
                 // Verified B2B OAuth2 token from external Identity Server
                 let jwks_url = std::env::var("B2B_JWKS_URL").unwrap_or_else(|_| {
                     let identity_server = std::env::var("B2B_IDENTITY_SERVER_URL")
-                        .unwrap_or_else(|_| "http://127.0.0.1:4012".to_string());
+                        .unwrap_or_else(|_| "http://127.0.0.1:3075".to_string());
                     format!(
                         "{}/.well-known/jwks.json",
                         identity_server.trim_end_matches('/')

@@ -1,0 +1,7 @@
+disallowed-methods = [
+    { path = "std::process::Command::new", reason = "INV-002: Zero local subprocess execution in commercial_b2b_agent. All execution must route through Marketplace Trust Gateway." },
+    { path = "std::process::Command::spawn", reason = "INV-002: Zero local subprocess execution in commercial_b2b_agent. All execution must route through Marketplace Trust Gateway." },
+    { path = "std::process::Command::output", reason = "INV-002: Zero local subprocess execution in commercial_b2b_agent. All execution must route through Marketplace Trust Gateway." },
+    { path = "std::process::Command::status", reason = "INV-002: Zero local subprocess execution in commercial_b2b_agent. All execution must route through Marketplace Trust Gateway." }
+]
+
