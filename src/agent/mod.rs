@@ -23,6 +23,7 @@ use agent_core::business_logic::mcp_runtime::McpRuntimeDetails;
 use agent_core::business_logic::services::{
     DiscoveryService, EvaluationService, MemoryService, WorkflowServiceApi,
 };
+use agent_models::agent_request::AgentRequest;
 use agent_models::execution::execution_result::ExecutionResult;
 use configuration::AgentConfig;
 use llm_api::chat::ChatCompletionRequest;
@@ -169,16 +170,29 @@ impl Agent for B2bIdentityAgent {
 
     async fn handle_request(
         &self,
-        request: LlmMessage,
-        metadata: Option<Map<String, Value>>,
+        request: AgentRequest,
     ) -> anyhow::Result<ExecutionResult> {
+        let metadata = request.metadata.clone();
         let request_id = Uuid::new_v4().to_string();
-        let thread_id = metadata
-            .as_ref()
-            .and_then(|m| m.get("thread_id").or_else(|| m.get("conversation_id")))
-            .and_then(|v| v.as_str())
-            .unwrap_or(request_id.as_str())
-            .to_string();
+        let thread_id = request
+            .session_id
+            .clone()
+            .or_else(|| {
+                metadata
+                    .as_ref()
+                    .and_then(|m| m.get("thread_id").or_else(|| m.get("conversation_id")))
+                    .and_then(|v| v.as_str())
+                    .map(|s| s.to_string())
+            })
+            .unwrap_or_else(|| request_id.clone());
+
+        let user_query = request.user_query();
+        let llm_request = LlmMessage {
+            role: "user".to_string(),
+            content: Some(user_query),
+            tool_call_id: None,
+            tool_calls: None,
+        };
 
         // Check if external caller provided explicit external tool invocation in metadata
         if let Some((tool_name, args)) = metadata.as_ref().and_then(|meta| {
@@ -249,7 +263,7 @@ impl Agent for B2bIdentityAgent {
             }
 
             agent
-                .run_agent_internal(request.clone(), Some(ssi_auth), b2b_prompt_override)
+                .run_agent_internal(llm_request.clone(), Some(ssi_auth), b2b_prompt_override)
                 .await
         } else {
             let messages = vec![
@@ -259,7 +273,7 @@ impl Agent for B2bIdentityAgent {
                     tool_call_id: None,
                     tool_calls: None,
                 },
-                request.clone(),
+                llm_request.clone(),
             ];
             let req_payload = ChatCompletionRequest {
                 model: self.swarm_client.model_id.clone(),

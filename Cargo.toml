@@ -4,10 +4,10 @@ version = "0.1.0"
 edition = "2024"
 
 [dependencies]
-agent_models = { git = "https://github.com/fcn06/swarm_commons.git", rev = "4703455be5ba40049ff028412de2fbceef4faa12" }
-agent_core = { git = "https://github.com/fcn06/swarm_commons.git", rev = "4703455be5ba40049ff028412de2fbceef4faa12" }
-configuration = { git = "https://github.com/fcn06/swarm_commons.git", rev = "4703455be5ba40049ff028412de2fbceef4faa12" }
-llm_api = { git = "https://github.com/fcn06/swarm_commons.git", rev = "4703455be5ba40049ff028412de2fbceef4faa12" }
+agent_models = { git = "https://github.com/fcn06/swarm_gateway.git", branch = "main" }
+agent_core = { git = "https://github.com/fcn06/swarm_gateway.git", branch = "main" }
+configuration = { git = "https://github.com/fcn06/swarm_gateway.git", branch = "main" }
+llm_api = { git = "https://github.com/fcn06/swarm_gateway.git", branch = "main" }
 
 sha2 = "0.10"
 hex = "0.4"
