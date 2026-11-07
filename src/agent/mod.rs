@@ -1,3 +1,4 @@
+// INV-002: Zero local subprocess execution in commercial_b2b_agent; all actions route via Marketplace Trust Gateway.
 use async_trait::async_trait;
 use base64::Engine;
 use ed25519_dalek::Verifier;
