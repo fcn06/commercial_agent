@@ -21,3 +21,8 @@ Thumbs.db
 *~
 .idea/
 .vscode/
+
+# Cryptographic Private Keys
+*.key
+*.pem
+*.priv*.key
